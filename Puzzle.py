@@ -27,19 +27,21 @@ class Word:
     '''
     def is_valid(self, word): 
         if len(word) != self.length: 
+            print("NOT SAME LENGTH")
             return False 
             
         for i in range(self.length): 
-            if self.fill != "*" and word[i] != self.fill[i]: 
+            if self.fill[i] != "*" and word[i] != self.fill[i]: 
+                print("FALSE")
                 return False 
         return True 
-    
+        
     '''
     Returns true if the word is valid and updates Word 
     Returns false otherwise 
     '''
     def fill_word(self, word): 
-        if not is_valued(word): 
+        if not self.is_valid(word): 
             return False 
         self.word = word 
         for i in range(self.length):
@@ -50,10 +52,11 @@ class Word:
     def __repr__(self): 
         string = {'number': self.number, 
             'length' : self.length,
-            'orientation' : "across" if self.orientation == 0 else "down",
+            'orientation' : "across" if self.orientation == 1 else "down",
             'start' : str(self.start), 
             'clue' : self.clue,
-            'word' : self.fill}
+            'partial_word' : self.fill,
+            'word' : self.word}
         return str(string )
         
 class Crossword: 
@@ -75,6 +78,7 @@ class Crossword:
     Returns true if all the words are filled out, False otherwise 
     '''
     def is_solution(self): 
+        
         for word in self.words_across: 
             if word.word is None: 
                 return False 
@@ -82,6 +86,7 @@ class Crossword:
         for word in self.words_down: 
             if word.word is None:   
                 return False 
+                
         return True 
     
     '''
@@ -96,6 +101,8 @@ class Crossword:
     
     '''
     Returns list of down words that has no solution yet 
+    
+    NOTE (Idea): To remove a solution for a word, this can be done with backtracking 
     '''
     def down_blank(self): 
         words = [] 
@@ -104,14 +111,29 @@ class Crossword:
                 words.append(word) 
         return words 
     
-    '''
-    Remove a solution and update the grid and Words 
-    '''
-    def remove_solution(self, number, orientation): 
-        pass 
+    def add_solution(self, number, orientation, solution): 
+        if orientation == 1: # Horizontal/across 
+            word = self.words_across[number]
+            print(word)
+            if word.is_valid(solution): 
+                word.fill_word(solution)
+                # Update grid 
+                for j in range(word.length): 
+                    self.grid[word.start[0]][word.start[1] + j] = word.word[j]
+                return True 
+            
+        else: # Vertical/Down 
         
-    def update_grid(self): 
-        pass 
+            word = self.words_down[number] 
+            
+            if word.is_valid(solution): 
+                word.fill_word(solution)
+                # Update grid 
+                for i in range(word.length): 
+                    self.grid[word.start[0] + i][word.start[1]] = word.word[i]
+                return True 
+        return False 
+
         
     def __repr__(self): 
         string = "" 
