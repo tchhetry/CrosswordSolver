@@ -32,8 +32,9 @@ class Word:
     def is_valid(self, word): 
         if len(word) != self.length: 
             return False 
-            
+        print(self.number, self.fill)    
         for i in range(self.length): 
+            
             if self.fill[i] != "*" and word[i] != self.fill[i]: 
                 return False 
         return True 
@@ -68,13 +69,15 @@ class Crossword:
     words_across = dictionary where key = number and value = Word object 
     words_down = dictionary where key = number and value = Word object 
     '''
-    def __init__(self, vert_dim, hor_dim, grid = None): 
+    def __init__(self, vert_dim, hor_dim, grid = None, words_across = None, words_down = None): 
         if grid is None: 
             self.grid = [['-' for j in range(hor_dim)] for i in range(vert_dim)]
         else: 
             self.grid = copy.deepcopy(grid)
-        self.words_across = {}
-        self.words_down = {}
+            
+        
+        self.words_across = words_across if words_across is not None else {} 
+        self.words_down = words_down if words_down is not None else {} 
     
     ''' 
     Returns true if all the words are filled out, False otherwise 
@@ -119,6 +122,7 @@ class Crossword:
         if orientation == 1: # Horizontal/across 
             word = self.words_across[number]
             if word.is_valid(solution): 
+            
                 word.fill_word(solution)
                 # Update grid 
                 i = word.start[0]
@@ -130,12 +134,13 @@ class Crossword:
         else: # Vertical/Down 
             word = self.words_down[number] 
             if word.is_valid(solution): 
+                print(solution, "VALID")
                 word.fill_word(solution)
                 # Update grid 
                 i = word.start[0]
                 j = word.start[1]
                 for offset in range(word.length): 
-                    self.grid[i+offset,j] = word.word[i]
+                    self.grid[i+offset,j] = word.word[offset]
                 return True 
         return False 
     
