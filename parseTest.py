@@ -4,7 +4,7 @@ If no argument is given, 'che20200110.puz' is used
 '''
 
 import puz 
-from Puzzle import Crossword, Word 
+from PuzzleTest import Crossword, Word 
 import sys 
 import numpy as np 
 

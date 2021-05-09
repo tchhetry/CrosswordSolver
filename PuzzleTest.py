@@ -14,7 +14,7 @@ class Word:
     domain = list of words 
     possible_words = list of possible solutions 
     '''
-    def __init__(self, number, length, orientation, start, clue,domain = None,  constraints = None): 
+    def __init__(self, number, length, orientation, start, clue, constraints = None, domain = None): 
         self.number = number 
         self.orientation = orientation 
         self.length = length 
@@ -22,8 +22,8 @@ class Word:
         self.word = None 
         self.clue = clue 
         self.constraints = [] if constraints is None else constraints
+        print(domain)
         self.domain = [] if domain is None else domain
-
     
     ''' 
     is_valid checks if a word if valid given the current partial solution 
@@ -35,14 +35,10 @@ class Word:
             return False 
         
         # Check if any constraints are violated 
-        for constraint in self.constraints: 
+        for constraint in constraints: 
             index = constraint[1] 
-            if constraint[0].word is None: 
-                continue 
-            if word[index] != constraint[0].word[index]: 
+            if self.word[index] != constraint[0].word[index]: 
                 return False 
-                
-        self.word = word 
         return True 
         
     
@@ -55,8 +51,7 @@ class Word:
             'word' : self.word}
         #return str(string )
         orientation = " across" if self.orientation == 1 else " down"
-        
-        return str(self.number) + orientation + " " + str(self.word)
+        return str(self.number) + orientation
         
         
 class Crossword: 
@@ -73,10 +68,8 @@ class Crossword:
         else: 
             self.grid = copy.deepcopy(grid)
         
-        self.vert_dim = vert_dim
-        self.hor_dim = hor_dim
         self.word_list = [] if words is None else words 
-        self.constraints = [] 
+
     
     ''' 
     is_solution checks if the crossword is solved 
@@ -128,21 +121,20 @@ class Crossword:
     Returns the grid as an array 
     '''
     def return_grid(self): 
-        grid = copy.deepcopy(self.grid)
+        grid = [['-' for j in range(self.hor_dim)] for i in range(self.vert_dim)]
         for word in self.word_list: 
-            if word.word is not None: 
-                x = word.start[0]
-                y = word.start[1]
-                dim = word.orientation 
-                ind = 0 
+            x = word.start[0]
+            y = word.start[1]
+            dim = word.orientation 
+            ind = 0 
 
-                while ind < word.length: 
-                    grid[x,y] = word.word[ind]
-                    ind += 1 
-                    if dim == 0: 
-                        x += 1 
-                    else: 
-                        y += 1 
+            while ind < word.length: 
+                self.grid[x,y] = word.word[ind]
+                ind += 1 
+                if dim == 0: 
+                    x += 1 
+                else: 
+                    y += 1 
         return grid 
 
         
