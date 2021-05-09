@@ -1,7 +1,7 @@
 import puz 
 from Puzzle import Crossword, Word 
 import sys 
-
+import numpy as np 
 file = 'che20200110.puz' 
 
 
@@ -24,6 +24,7 @@ for i in range(p.height):
     row = ['*' if c == '-' else '_' for c in p.fill[start:start + p.width]]
     grid.append(row)
 
+grid = np.array(grid)
 crossword = Crossword(p.width, p.height, grid)
 
 
@@ -37,7 +38,7 @@ for clue in numbering.across:
     x = cell//p.width 
     y = cell - (x*p.width)
  
-    word = Word(clue['num'], clue['len'], 1, [x,y], clue['clue'])
+    word = Word(clue['num'], clue['len'], 1, [x,y], clue['clue'], crossword.grid[x,y:y+clue['len']])
     crossword.words_across[clue['num']] = word  
 
 for clue in numbering.down:
@@ -45,5 +46,6 @@ for clue in numbering.down:
     x = cell//p.width 
     y = cell - (x*p.width)
   
-    word = Word(clue['num'], clue['len'], 0, [x,y], clue['clue'])
+    word = Word(clue['num'], clue['len'], 0, [x,y], clue['clue'], crossword.grid[x:x+clue['len'],y])
     crossword.words_down[clue['num']] = word   
+

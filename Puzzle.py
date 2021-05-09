@@ -1,7 +1,11 @@
+import numpy as np 
+import copy 
+
 class Word: 
     ''' 
     __init__ function for Word 
     number = number in the crossword puzzle 
+    orientation = 0 for down/vertival, 1 for across/horizontal
     length = length of word 
     start = [x,y] where word start on the grid 
     word = word
@@ -9,13 +13,13 @@ class Word:
     clue = clue for the word 
     possible_words = list of possible solutions 
     '''
-    def __init__(self, number, length, orientation, start, clue, possible_words = None): 
+    def __init__(self, number, length, orientation, start, clue, fill, possible_words = None): 
         self.number = number 
         self.orientation = orientation 
         self.length = length 
         self.start = start  
         self.word = None 
-        self.fill = ['*' for i in range(length)]
+        self.fill = fill #np.array(['*' for i in range(length)])
         self.clue = clue 
         if possible_words is None: 
             self.possible_words = [] 
@@ -27,12 +31,10 @@ class Word:
     '''
     def is_valid(self, word): 
         if len(word) != self.length: 
-            print("NOT SAME LENGTH")
             return False 
             
         for i in range(self.length): 
             if self.fill[i] != "*" and word[i] != self.fill[i]: 
-                print("FALSE")
                 return False 
         return True 
         
@@ -44,8 +46,8 @@ class Word:
         if not self.is_valid(word): 
             return False 
         self.word = word 
-        for i in range(self.length):
-            self.fill[i] = word[i] 
+        # for i in range(self.length):
+            # self.fill[i] = word[i] 
         return True 
     
     
@@ -70,7 +72,7 @@ class Crossword:
         if grid is None: 
             self.grid = [['-' for j in range(hor_dim)] for i in range(vert_dim)]
         else: 
-            self.grid = grid 
+            self.grid = copy.deepcopy(grid)
         self.words_across = {}
         self.words_down = {}
     
@@ -102,7 +104,6 @@ class Crossword:
     '''
     Returns list of down words that has no solution yet 
     
-    NOTE (Idea): To remove a solution for a word, this can be done with backtracking 
     '''
     def down_blank(self): 
         words = [] 
@@ -111,29 +112,48 @@ class Crossword:
                 words.append(word) 
         return words 
     
+    '''
+    Add solution and update grid 
+    '''
     def add_solution(self, number, orientation, solution): 
         if orientation == 1: # Horizontal/across 
             word = self.words_across[number]
-            print(word)
             if word.is_valid(solution): 
                 word.fill_word(solution)
                 # Update grid 
-                for j in range(word.length): 
-                    self.grid[word.start[0]][word.start[1] + j] = word.word[j]
+                i = word.start[0]
+                j = word.start[1]
+                for offset in range(word.length): 
+                    self.grid[i, j+offset] = word.word[offset]
                 return True 
             
         else: # Vertical/Down 
-        
             word = self.words_down[number] 
-            
             if word.is_valid(solution): 
                 word.fill_word(solution)
                 # Update grid 
-                for i in range(word.length): 
-                    self.grid[word.start[0] + i][word.start[1]] = word.word[i]
+                i = word.start[0]
+                j = word.start[1]
+                for offset in range(word.length): 
+                    self.grid[i+offset,j] = word.word[i]
                 return True 
         return False 
-
+    
+    ''' 
+    Update grid and words with new grid (NOTE: 'grid' should be a deepcopy) 
+    '''
+    def update_grid(self, grid): 
+        for word in (list(self.words_across.values()) + list(self.words_down.values())): 
+            i = word.start[0]
+            j = word.start[1]
+            self.grid[i,j] = grid[i,j]
+            if word.orientation == 1: # Across 
+                if not np.array_equal(word.fill, grid[i, j:j+word.length]): 
+                    word.word = None 
+            else: 
+                if not np.array_equal(word.fill, grid[i:word.length, j]): 
+                    word.word = None 
+        
         
     def __repr__(self): 
         string = "" 
