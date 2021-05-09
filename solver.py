@@ -88,9 +88,10 @@ def improved_DFSB(assignment, constraints, domains, arclist):
         consistent = True
         for i in constraints[var]:
             [pos, ind], [pos2, ind2] = i
-            print(i, pos, ind, pos2, ind2, assignment[pos], assignment[pos2])
-            if assignment[pos] != None and assignment[pos2] != None:
-                if assignment[pos][ind] == assignment[pos2][ind2]:
+            print(i, pos, ind, pos2, ind2, assignment[pos], assignment[pos2], v)
+            if assignment[pos] != None and v != None:
+                print(assignment[pos][ind], v[ind2])
+                if assignment[pos][ind] != v[ind2]:
                     consistent = False
                 break
         print(consistent)
@@ -208,7 +209,7 @@ if __name__ == '__main__':
     word_ass = [None for i in range(len(hints))]
     word_domains = [word.domain for word in sample.word_list]
 
-    print(word_domains)
+    print("word_domains", word_domains)
     # b, cons = buildBoard(n, positions)
     # for c in cons:
     #     print(c)
@@ -225,6 +226,7 @@ if __name__ == '__main__':
     #     print(d)
 
     arclist = []
+    print(word_ass, cons, word_domains)
     solution = improved_DFSB(word_ass, cons, word_domains, arclist)
     print("solution: ", solution)
     for i in range(len(solution)):
