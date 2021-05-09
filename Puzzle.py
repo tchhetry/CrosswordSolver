@@ -1,3 +1,7 @@
+'''
+This file contains the Word and Crossword object 
+'''
+
 import numpy as np 
 import copy 
 
@@ -19,7 +23,7 @@ class Word:
         self.length = length 
         self.start = start  
         self.word = None 
-        self.fill = fill #np.array(['*' for i in range(length)])
+        self.fill = fill
         self.clue = clue 
         if possible_words is None: 
             self.possible_words = [] 
@@ -27,7 +31,9 @@ class Word:
             self.possible_words = possible_words
     
     ''' 
-    Check if word is valid given the current partial solution 
+    is_valid checks if a word if valid given the current partial solution 
+    input: word (string) 
+    output: boolean 
     '''
     def is_valid(self, word): 
         if len(word) != self.length: 
@@ -40,15 +46,15 @@ class Word:
         return True 
         
     '''
-    Returns true if the word is valid and updates Word 
-    Returns false otherwise 
+    fill_word updates self.word 
+    input: word (string) 
+    output: boolean 
     '''
     def fill_word(self, word): 
         if not self.is_valid(word): 
             return False 
+            
         self.word = word 
-        # for i in range(self.length):
-            # self.fill[i] = word[i] 
         return True 
     
     
@@ -65,9 +71,10 @@ class Word:
 class Crossword: 
     '''
     __init__ function for Crossword 
-    grid = array of crossword 
-    words_across = dictionary where key = number and value = Word object 
-    words_down = dictionary where key = number and value = Word object 
+    input: 
+        grid (array) = crossword 
+        words_across (dictionary) = key: number and value: Word object 
+        words_down (dictionary) = key: number and value: Word object 
     '''
     def __init__(self, vert_dim, hor_dim, grid = None, words_across = None, words_down = None): 
         if grid is None: 
@@ -80,7 +87,8 @@ class Crossword:
         self.words_down = words_down if words_down is not None else {} 
     
     ''' 
-    Returns true if all the words are filled out, False otherwise 
+    is_solution checks if the crossword is solved 
+    output: boolean 
     '''
     def is_solution(self): 
         
@@ -95,7 +103,8 @@ class Crossword:
         return True 
     
     '''
-    Returns list of across words that has no solution yet 
+    across_blank returns a list of horizontal words that does not have a solution 
+    output: list 
     '''
     def across_blank(self): 
         words = [] 
@@ -105,8 +114,8 @@ class Crossword:
         return words 
     
     '''
-    Returns list of down words that has no solution yet 
-    
+    across_down returns a list of vertical words that does not have a solution 
+    output: list 
     '''
     def down_blank(self): 
         words = [] 
@@ -116,7 +125,12 @@ class Crossword:
         return words 
     
     '''
-    Add solution and update grid 
+    add_solution updates the grid and corresponding word with the solution 
+    input: 
+        number (integer): number associated with the word 
+        orientation (integer): 0 for vertical/down, 1 for horizontal/across 
+        solution (string): given solution 
+    output: boolean for success status 
     '''
     def add_solution(self, number, orientation, solution): 
         if orientation == 1: # Horizontal/across 
@@ -145,7 +159,9 @@ class Crossword:
         return False 
     
     ''' 
-    Update grid and words with new grid (NOTE: 'grid' should be a deepcopy) 
+    update_grid updates the grid and corresponding words 
+    input: grid (array) = new grid status 
+        NOTE: grid should be a deepcopy 
     '''
     def update_grid(self, grid): 
         for word in (list(self.words_across.values()) + list(self.words_down.values())): 

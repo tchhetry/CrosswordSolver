@@ -1,7 +1,13 @@
+'''
+This file takes a .puz file and parses the content into a Crossword object 
+If no argument is given, 'che20200110.puz' is used 
+'''
+
 import puz 
 from Puzzle import Crossword, Word 
 import sys 
 import numpy as np 
+
 file = 'che20200110.puz' 
 
 
@@ -10,7 +16,6 @@ if len(args) == 2:
     file = args[1] 
     
 p = puz.read(file)
-
 
 '''
 Create grid for the Crossword puzzle: 
