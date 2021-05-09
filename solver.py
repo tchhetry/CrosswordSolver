@@ -11,39 +11,45 @@ import random
 
 exploredCount = 0  # global counter for explored states
 
-
 def AC3(cons, doms, arcl):
-    # print("doms:{}, cons: {}".format(doms, cons))
+    print("\nAC3: doms:{}, cons: {}".format(doms, cons))
     # initilize arc Queue, contains all arcs in csp
-    arcQ = deque(arcl)
+    arcQ = deque(arcl) 
     # while arc Queue is not empty
-    while arcQ:
+    while arcQ:  
         # pop an arc tail -> head from queue
-        t, h = arcQ.popleft()
+        t, h = arcQ.popleft()  
         # prune domain of tail  based on head's domain
         removed = False
-        # print("{} -> {}, old d: {}".format(t, h, doms[t]))
+        print("t: {} -> h: {}, old t d: {}".format(t, h, doms[t[0]]))
+        overlap = [ w[h[1]] for w in doms[h[0]]]
+        print(f"\th d: {doms[h[0]]}, {overlap}")
         # for each value in tail's domain
-        for x in doms[t]:
+        for x in doms[t[0]]:
+            c = x[t[1]]
+            print(f"for t value {x}, c={c}, {c not in overlap}")
             # removed value if there is no value in head's domain that satisfy cons
-            if doms[h] == [x]:  # if x in doms[h] and len(doms[h]) == 1:
-                doms[t].remove(x)
+            # if doms[h] == [x]: # if x in doms[h] and len(doms[h]) == 1:
+            #     doms[t].remove(x)
+            #     removed = True
+            if c not in overlap:
+                doms[t[0]].remove(x)
                 removed = True
         # if domain of tail is pruned
         if removed:
-            # print("\t removed?: {}, t: {}, new d: {}".format(removed, t, doms[t]))
-            # if domain of t is empty (all values are inconsistent), return False
-            if len(doms[t]) == 0:
-                return False
+            print("\t removed?: {}, t: {}, new d: {}".format(removed, t, doms[t[0]]))
+            # if domain of t is empty (all values are inconsistent), return False 
+            if len(doms[t[0]]) == 0: return False
+            print(f"cons at index {t[0]}: {cons[t[0]]}\narcQ: {arcQ}")
             # add all arc n -> t to the queue if not already and n != h
-            for n in cons[t]:
-                if (n, t) not in arcQ and n != h:
-                    arcQ.append((n, t))
+            for n in cons[t[0]]:
+                print("n, h: ", n, h, ((n[0], n[1]) not in arcQ), (n[0] != h))
+                if (n[0], n[1]) not in arcQ and n[0] != h: 
+                    print(f"added {(n[0], n[1])}")
+                    arcQ.append( (n[0], n[1]) )  
     return True
 
 # DFS-B with variable, value ordering + AC3 for constraint propagation.
-
-
 def improved_DFSB(assignment, constraints, domains, arclist):
     print("\nCurrent assignment: ", assignment)
     print(constraints, domains, arclist)
@@ -51,7 +57,7 @@ def improved_DFSB(assignment, constraints, domains, arclist):
     if None not in assignment:
         return assignment
     # call AC3 on given csp to do constrain propagation; if inconsistent detected, return False
-    # if AC3(constraints, domains, arclist)==False: return False
+    if AC3(constraints, domains, arclist)==False: return False
     # print("domains after AC3: ", domains)
     global exploredCount  # global counter for explored states
     exploredCount += 1
@@ -231,6 +237,14 @@ if __name__ == '__main__':
     #     print(d)
 
     arclist = []
+    print(cons)
+    for i in range(len(cons)):
+        print(f"cons at {i}: {cons[i]}")
+        for j in cons[i]:
+            print("j", (i, j), j[1], j[0] )
+            arclist.append( (j[1], j[0]) )  # arcQ.put((i, j))
+    print("arclist: ", arclist)
+    
     print(word_ass, cons, word_domains)
     solution = improved_DFSB(word_ass, cons, word_domains, arclist)
     print("solution: ", solution)
