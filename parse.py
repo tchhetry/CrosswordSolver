@@ -37,9 +37,9 @@ def add_indices(x, y, word):
     ind = 0
     while ind < word.length:
         try:
-            word_indices[(i, j)].append(word)
+            word_indices[(i, j)].append([word, ind])
         except:
-            word_indices[(i, j)] = [word]
+            word_indices[(i, j)] = [[word, ind]]
         if word.orientation == 0:
             i += 1
         else:
@@ -66,22 +66,40 @@ def add_words_to_crossword():
         crossword.word_list.append(word)
 
 
+'''
+Add Constraints to each word 
+'''
+
+
 def add_constraints_to_words():
-    '''
-    Add Constraints 
-    '''
     global word_indices
     for key, value in word_indices.items():
         for i in range(len(value)-1):
-            word = value[i]
             for j in range(i+1, len(value)):
-                word.constraints.append([value[j], key])
-                value[j].constraints.append([word, key])
+                value[i][0].constraints.append(
+                        [value[j][0], value[j][1], value[i][1]])
+                value[j][0].constraints.append(
+                        [value[i][0], value[i][1], value[j][1]])
+
+
+'''
+Add all constraints to the crossword 
+'''
 
 
 def add_constraints_to_crossowrd():
-    global word_indices
+    global crossword
     constraints = []
+
+    for i in range(len(crossword.word_list)):
+        row = []
+        word = crossword.word_list[i]
+        for nei in word.constraints:
+            pos = crossword.word_list.index(nei[0])
+            ind = nei[1]
+            row.append([[pos, ind], [i, nei[2]]])
+        constraints.append(row)
+    crossword.constraints = constraints
 
 
 '''
@@ -89,19 +107,24 @@ Create grid for the Crossword puzzle:
 _ for black space 
 * for word space 
 '''
-grid = []
-word_indices = {}
-for i in range(p.height):
-    start = i * p.width
-    row = ['*' if c == '-' else '_' for c in p.fill[start:start + p.width]]
-    grid.append(row)
 
-grid = np.array(grid)
+
+def create_grid():
+    grid = []
+    word_indices = {}
+    for i in range(p.height):
+        start = i * p.width
+        row = ['*' if c == '-' else '_' for c in p.fill[start:start + p.width]]
+        grid.append(row)
+    return np.array(grid)
+
+
+grid = create_grid()()
 crossword = Crossword(p.width, p.height, grid)
 add_words_to_crossword()
 add_constraints_to_words()
+add_constraints_to_crossowrd()
 
-print(word_indices)
 
 '''
 BERT to get domain 

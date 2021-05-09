@@ -185,13 +185,13 @@ if __name__ == '__main__':
 
     n = 10
     words = ["trick", "pumpkin", "monster", "owl",
-             "pirate", "mask", "lantern", "candy"]
+             "pirate", "mask", "lantern", "candy", "lent", "wow"]
     hints = ["The opposite of treat", "Goes bunp in the night", "Givens a hoot",
              "Sails the seven seas", "Something orange and around", "Something sweet",
              "Cover your face", "Lights the night"]
-    # (x, y, dimension, length), 0 -> vertical & 1 -> horizontal
-    # positions = [(0, 4, 0, 5), (2, 6, 0, 7), (3, 6, 1, 3), (4, 0, 0, 6), (4, 0, 1, 7),
-    #     (5, 8, 0, 5), (6, 3, 0, 4), (7, 2, 1, 7)]
+    # # (x, y, dimension, length), 0 -> vertical & 1 -> horizontal
+    # # positions = [(0, 4, 0, 5), (2, 6, 0, 7), (3, 6, 1, 3), (4, 0, 0, 6), (4, 0, 1, 7),
+    # #     (5, 8, 0, 5), (6, 3, 0, 4), (7, 2, 1, 7)]
 
     # positions = [(0, 4, 0, 5), (2, 6, 0, 7), (3, 6, 1, 3), (4, 0, 0, 6), (4, 0, 1, 7),
     #              (5, 8, 0, 5), (7, 2, 1, 7), (6, 3, 0, 4)]
@@ -199,9 +199,19 @@ if __name__ == '__main__':
     # word_ass = [None for i in range(len(hints))]
     # word_domains = [[w for w in words if len(
     #     w) == positions[i][3]] for i in range(len(hints))]
-    # print(word_domains)
+    # print("word domains", word_domains)
+    # b, cons = buildBoard(n, positions)
+    # for c in cons:
+    #     print(c)
+    # printBoard(b)
+    # random.shuffle(words)
+    # print("words: ", words, len(hints))
+    # for c in cons:
+    #     print(c)
+    # for d in word_domains:
+    #     print(d)
 
-    # ADDED TO TEST
+    # ADDED TO TEST STRUCTURE
     sample = SampleCrossword()
     hints = [word.clue for word in sample.word_list]
 
@@ -209,13 +219,7 @@ if __name__ == '__main__':
     word_domains = [word.domain for word in sample.word_list]
 
     print(word_domains)
-    # b, cons = buildBoard(n, positions)
-    # for c in cons:
-    #     print(c)
-    # printBoard(b)
-    # random.shuffle(words)
-    # print("words: ", words, len(hints))
-    print("Constraints")
+
     cons = sample.constraints
     for c in cons:
         print(c)

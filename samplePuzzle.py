@@ -83,13 +83,3 @@ class SampleCrossword(Crossword):
 
 
 sample = SampleCrossword()
-# print(sample)
-# print(sample.word_list)
-# print("For word OWL")
-# word = sample.word_list[0]
-
-# print(word.domain)
-# print(word.constraints)
-# sample.add_solution(0, "owl")
-# print(word.word)
-# print(sample.return_grid())
