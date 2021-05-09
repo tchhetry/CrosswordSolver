@@ -38,7 +38,7 @@ for clue in numbering.across:
     y = cell - (x*p.width)
  
     word = Word(clue['num'], clue['len'], 0, [x,y], clue['clue'])
-    crossword.words_across.append(word) 
+    crossword.words_across[clue['num']] = word  
 
 for clue in numbering.down:
     cell = clue['cell'] 
@@ -46,5 +46,6 @@ for clue in numbering.down:
     y = cell - (x*p.width)
   
     word = Word(clue['num'], clue['len'], 0, [x,y], clue['clue'])
-    crossword.words_down.append(word)     
+    crossword.words_down[clue['num']] = word   
 
+print(crossword.words_down)

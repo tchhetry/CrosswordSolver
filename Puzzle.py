@@ -6,7 +6,6 @@ class Word:
     start = [x,y] where word start on the grid 
     word = word
     fill = array of word length. Used to keep track of partial solution 
-    fill_prev = Keep track of previous state of fill 
     clue = clue for the word 
     possible_words = list of possible solutions 
     '''
@@ -17,7 +16,6 @@ class Word:
         self.start = start  
         self.word = None 
         self.fill = ['*' for i in range(length)]
-        self.fill_prev = self.fill
         self.clue = clue 
         if possible_words is None: 
             self.possible_words = [] 
@@ -70,8 +68,8 @@ class Crossword:
             self.grid = [['-' for j in range(hor_dim)] for i in range(vert_dim)]
         else: 
             self.grid = grid 
-        self.words_across = []
-        self.words_down = []
+        self.words_across = {}
+        self.words_down = {}
     
     ''' 
     Returns true if all the words are filled out, False otherwise 
