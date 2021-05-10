@@ -6,11 +6,11 @@ import sys
 
 link = "https://www.wordplays.com/crossword-solver/"
 if sys.platform == "darwin":
-    chrome = "./chromedrivermac"
+    chrome = "./drivers/chromedrivermac"
 elif sys.platform == "win32" or sys.platform == "cygwin":
-    chrome = "./chromedriver.exe"
+    chrome = "./drivers/chromedriver.exe"
 else:
-    chrome = "./chromedriverlinux"
+    chrome = "./drivers/chromedriverlinux"
 
 def wordplaysCand(clue):
     answers = []
@@ -34,5 +34,3 @@ def wordplaysCand(clue):
             if len(word) > 1:
                 answers.append(word[1].text)
     return answers
-
-print(wordplaysCand("haha"))
