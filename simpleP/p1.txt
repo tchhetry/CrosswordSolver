@@ -1,15 +1,15 @@
 trick, pumpkin, monster, owl, pirate, mask, lantern, candy, lent, wow
 
 Across
-3. (3, 6, 1, 3) Givens a hoot
-4. (4, 0, 1, 7) Something orange and around
+3. (3, 6, 3) Givens a hoot
+4. (4, 0, 7) Something orange and around
 7. (7, 2, 1, 7) Lights the night
 
 Down
-1. (0, 4, 0, 5) The opposite of treat
-2. (2, 6, 0, 7) Goes bump in the night
-4. (4, 0, 0, 6) Sails the seven seas
-5. (5, 8, 0, 5) Something sweet
-6. (6, 3, 0, 4) Cover your face
+1. (0, 4, 5) The opposite of treat
+2. (2, 6, 7) Goes bump in the night
+4. (4, 0, 6) Sails the seven seas
+5. (5, 8, 5) Something sweet
+6. (6, 3, 4) Cover your face
 
-website
+website: 
