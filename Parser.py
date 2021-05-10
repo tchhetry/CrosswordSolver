@@ -5,7 +5,7 @@ If no argument is given, 'che20200110.puz' is used
 
 import puz
 from Puzzle import Crossword, Word
-
+import getDomain
 import numpy as np
 
 
@@ -116,7 +116,9 @@ class Parser():
     '''
 
     def add_domains_to_words(self):
-        pass
+        for word in self.crossword.word_list:
+            domain = getDomain.wordplaysCand(word.clue, word.length)
+            word.domain = domain
 
 
 # parser = Parser()

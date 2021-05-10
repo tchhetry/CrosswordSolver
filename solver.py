@@ -301,15 +301,13 @@ if __name__ == '__main__':
 
     # Get Crossword CSP
     args = sys.argv
-    '''
+
     if len(args) != 3:
         print('Error: invalid arguments!')
-        Usage: python solver.py <INPUT FILE> <OUTPUT FILE> <MODE FLAG>
-        <MODE FLAG> can be either 0 (plain DFS-B) or 1 (improved DFS-B).
         print('Usage: python3 solver.py <INPUT FILE> <OUTPUT FILE> <MODE FLAG>. \n')
         exit(-1)
     file = args[1]
-    parser = Parse() 
+    parser = Parse()
     crossword = parser.parse(file)
     hints = [word.clue for word in crossword.word_list]
     word_ass = [None for i in range(len(hints))]
@@ -320,23 +318,25 @@ if __name__ == '__main__':
     for i in range(len(cons)):
         print(f"cons at {i}: {cons[i]}")
         for j in cons[i]:
-            arclist.append((j[1], j[0]))  
+            arclist.append((j[1], j[0]))
     print("arclist: ", arclist)
 
-    print(f"word_ass: {word_ass} \ncons: {cons} \nword_domains: {word_domains}")
+    print(
+        f"word_ass: {word_ass} \ncons: {cons} \nword_domains: {word_domains}")
     debug = True  # True, False
     start_time = datetime.now()
     solution = improved_DFSB(word_ass, cons, word_domains, arclist, debug)
     time_elapsed = datetime.now() - start_time
     print("solution: ", solution)
 
-    for i in range(len(solution)):
-        crossword.word_list[i].word = solution[i]
+    if solution is not False:
+        for i in range(len(solution)):
+            crossword.word_list[i].word = solution[i]
 
     print(crossword.return_grid())
 
     # Output solution into text file
     output_file = args[2]
-    with open(output_file, 'w') as f:
-        f.write(str(sample.return_grid()))
-    '''
+    if solution is not False:
+        with open(output_file, 'w') as f:
+            f.write(str(crossword.return_grid()))
