@@ -117,3 +117,14 @@ class Parser():
 
     def add_domains_to_words(self):
         pass
+
+
+# parser = Parser()
+# parser.parse()
+
+# solution = parser.p.solution
+# width = parser.p.width
+# ind = 0
+# while ind < len(solution):
+#     print(solution[ind:ind+width])
+#     ind += width
