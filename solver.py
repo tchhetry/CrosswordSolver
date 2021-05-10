@@ -249,12 +249,12 @@ if __name__ == '__main__':
     # for d in word_domains:
     #     print(d)
 
+    # Get Crossword CSP
+    args = sys.argv
     '''
-    # Get Crossword CSP 
-    args = sys.argv 
-    if len(args) != 4:
+    if len(args) != 3:
         print('Error: invalid arguments!')
-        Usage: python solver.py <INPUT FILE> <OUTPUT FILE> <MODE FLAG>.
+        Usage: python solver.py <INPUT FILE> <OUTPUT FILE>
         <MODE FLAG> can be either 0 (plain DFS-B) or 1 (improved DFS-B).
         print('Usage: python3 dfsb.py <INPUT FILE> <OUTPUT FILE> <MODE FLAG>. \n')
         exit(-1)
@@ -283,6 +283,13 @@ if __name__ == '__main__':
         sample.word_list[i].word = solution[i]
 
     print(sample.return_grid())
+
+    '''
+    # Output solution into text file 
+    output_file = args[2]
+    with open(output_file, 'w') as f:
+        f.write(str(sample.return_grid()))
+    '''
     # n, color_ass, neighbors, k = readInput(sys.argv[1])
     if(True and False):
         print("if")
