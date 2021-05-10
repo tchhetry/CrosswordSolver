@@ -1,3 +1,8 @@
+'''
+This files takes in a .puz file and MODE flag 
+FORMAT python solver.py <input_file> <output_file> <mode> 
+'''
+
 from samplePuzzle import SampleCrossword
 import sys
 from datetime import datetime
@@ -6,23 +11,26 @@ from collections import deque
 import copy
 import random
 
+from Parser import Parser
+
 # This should run in two modes. a) Plain DFS-B and
 #   b) DFS-B with variable, value ordering + AC3 for constraint propagation.
 
 exploredCount = 0  # global counter for explored states
 
+
 def AC3(cons, doms, arcl):
     print("\nAC3: doms:{}, cons: {}".format(doms, cons))
     # initilize arc Queue, contains all arcs in csp
-    arcQ = deque(arcl) 
+    arcQ = deque(arcl)
     # while arc Queue is not empty
-    while arcQ:  
+    while arcQ:
         # pop an arc tail -> head from queue
-        t, h = arcQ.popleft()  
+        t, h = arcQ.popleft()
         # prune domain of tail  based on head's domain
         removed = False
         print("t: {} -> h: {}, old t d: {}".format(t, h, doms[t[0]]))
-        overlap = [ w[h[1]] for w in doms[h[0]]]
+        overlap = [w[h[1]] for w in doms[h[0]]]
         print(f"\th d: {doms[h[0]]}, {overlap}")
         # for each value in tail's domain
         for x in doms[t[0]]:
@@ -37,19 +45,23 @@ def AC3(cons, doms, arcl):
                 removed = True
         # if domain of tail is pruned
         if removed:
-            print("\t removed?: {}, t: {}, new d: {}".format(removed, t, doms[t[0]]))
-            # if domain of t is empty (all values are inconsistent), return False 
-            if len(doms[t[0]]) == 0: return False
+            print("\t removed?: {}, t: {}, new d: {}".format(
+                removed, t, doms[t[0]]))
+            # if domain of t is empty (all values are inconsistent), return False
+            if len(doms[t[0]]) == 0:
+                return False
             print(f"cons at index {t[0]}: {cons[t[0]]}\narcQ: {arcQ}")
             # add all arc n -> t to the queue if not already and n != h
             for n in cons[t[0]]:
                 print("n, h: ", n, h, ((n[0], n[1]) not in arcQ), (n[0] != h))
-                if (n[0], n[1]) not in arcQ and n[0] != h: 
+                if (n[0], n[1]) not in arcQ and n[0] != h:
                     print(f"added {(n[0], n[1])}")
-                    arcQ.append( (n[0], n[1]) )  
+                    arcQ.append((n[0], n[1]))
     return True
 
 # DFS-B with variable, value ordering + AC3 for constraint propagation.
+
+
 def improved_DFSB(assignment, constraints, domains, arclist):
     print("\nCurrent assignment: ", assignment)
     print(constraints, domains, arclist)
@@ -57,7 +69,8 @@ def improved_DFSB(assignment, constraints, domains, arclist):
     if None not in assignment:
         return assignment
     # call AC3 on given csp to do constrain propagation; if inconsistent detected, return False
-    if AC3(constraints, domains, arclist)==False: return False
+    if AC3(constraints, domains, arclist) == False:
+        return False
     # print("domains after AC3: ", domains)
     global exploredCount  # global counter for explored states
     exploredCount += 1
@@ -236,15 +249,33 @@ if __name__ == '__main__':
     # for d in word_domains:
     #     print(d)
 
+    '''
+    # Get Crossword CSP 
+    args = sys.argv 
+    if len(args) != 4:
+        print('Error: invalid arguments!')
+        Usage: python solver.py <INPUT FILE> <OUTPUT FILE> <MODE FLAG>.
+        <MODE FLAG> can be either 0 (plain DFS-B) or 1 (improved DFS-B).
+        print('Usage: python3 dfsb.py <INPUT FILE> <OUTPUT FILE> <MODE FLAG>. \n')
+        exit(-1)
+    file = args[1]
+    parser = Parse() 
+    crossword = parser.parse(file)
+    hints = [word.clue for word in crossword.word_list]
+    word_ass = [None for i in range(len(hints))]
+    word_domains = [word.domain for word in sample.word_list]
+    cons = crossword.constraints 
+    '''
+
     arclist = []
     print(cons)
     for i in range(len(cons)):
         print(f"cons at {i}: {cons[i]}")
         for j in cons[i]:
-            print("j", (i, j), j[1], j[0] )
-            arclist.append( (j[1], j[0]) )  # arcQ.put((i, j))
+            print("j", (i, j), j[1], j[0])
+            arclist.append((j[1], j[0]))  # arcQ.put((i, j))
     print("arclist: ", arclist)
-    
+
     print(word_ass, cons, word_domains)
     solution = improved_DFSB(word_ass, cons, word_domains, arclist)
     print("solution: ", solution)

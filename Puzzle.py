@@ -51,13 +51,13 @@ class Word:
         string = {'number': self.number,
                   'length': self.length,
                   'orientation': "across" if self.orientation == 1 else "down",
-                  # 'start' : str(self.start),
+                  'start': str(self.start),
                   # 'clue' : self.clue,
                   'word': self.word}
         # return str(string )
         orientation = " across" if self.orientation == 1 else " down"
 
-        return str(self.number) + orientation + " " + str(self.word)
+        return str(string)
 
 
 class Crossword:
@@ -152,7 +152,4 @@ class Crossword:
         return grid
 
     def __repr__(self):
-        string = ""
-        for row in self.grid:
-            string += (str(row) + '\n')
-        return string
+        return str(self.return_grid()) + "\n" + str(self.word_list)
