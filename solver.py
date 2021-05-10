@@ -233,17 +233,17 @@ if __name__ == '__main__':
     #     print(d)
 
     # ADDED TO TEST STRUCTURE
-    sample = SampleCrossword()
-    hints = [word.clue for word in sample.word_list]
+    # sample = SampleCrossword()
+    # hints = [word.clue for word in sample.word_list]
 
-    word_ass = [None for i in range(len(hints))]
-    word_domains = [word.domain for word in sample.word_list]
+    # word_ass = [None for i in range(len(hints))]
+    # word_domains = [word.domain for word in sample.word_list]
 
-    print(word_domains)
+    # print(word_domains)
 
-    cons = sample.constraints
-    for c in cons:
-        print(c)
+    # cons = sample.constraints
+    # for c in cons:
+    #     print(c)
     # for c in cons:
     #     print(c)
     # for d in word_domains:
@@ -251,21 +251,21 @@ if __name__ == '__main__':
 
     # Get Crossword CSP
     args = sys.argv
-    '''
-    if len(args) != 3:
-        print('Error: invalid arguments!')
-        Usage: python solver.py <INPUT FILE> <OUTPUT FILE>
-        <MODE FLAG> can be either 0 (plain DFS-B) or 1 (improved DFS-B).
-        print('Usage: python3 dfsb.py <INPUT FILE> <OUTPUT FILE> <MODE FLAG>. \n')
-        exit(-1)
+
+    # if len(args) != 3:
+    #     print('Error: invalid arguments!')
+    #     # Usage: python solver.py <INPUT FILE> <OUTPUT FILE>
+    #     # <MODE FLAG> can be either 0 (plain DFS-B) or 1 (improved DFS-B).
+    #     print('Usage: python3 dfsb.py <INPUT FILE> <OUTPUT FILE> <MODE FLAG>. \n')
+    #     exit(-1)
     file = args[1]
-    parser = Parse() 
-    crossword = parser.parse(file)
+    #parser = Parser(file)
+    #crossword = parser.parse()
+    crossword = SampleCrossword()
     hints = [word.clue for word in crossword.word_list]
     word_ass = [None for i in range(len(hints))]
-    word_domains = [word.domain for word in sample.word_list]
-    cons = crossword.constraints 
-    '''
+    word_domains = [word.domain for word in crossword.word_list]
+    cons = crossword.constraints
 
     arclist = []
     print(cons)
@@ -279,17 +279,17 @@ if __name__ == '__main__':
     print(word_ass, cons, word_domains)
     solution = improved_DFSB(word_ass, cons, word_domains, arclist)
     print("solution: ", solution)
+
     for i in range(len(solution)):
-        sample.word_list[i].word = solution[i]
+        crossword.word_list[i].word = solution[i]
 
-    print(sample.return_grid())
+    print(crossword.return_grid())
 
-    '''
-    # Output solution into text file 
+    # Output solution into text file
     output_file = args[2]
     with open(output_file, 'w') as f:
-        f.write(str(sample.return_grid()))
-    '''
+        f.write(str(crossword.return_grid()))
+
     # n, color_ass, neighbors, k = readInput(sys.argv[1])
     if(True and False):
         print("if")
