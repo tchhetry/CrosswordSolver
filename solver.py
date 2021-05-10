@@ -231,7 +231,7 @@ if __name__ == '__main__':
     n = 10
     words = ["trick", "pumpkin", "monster", "owl",
              "pirate", "mask", "lantern", "candy", "lent", "wow"]
-    hints = ["The opposite of treat", "Goes bunp in the night", "Givens a hoot",
+    hints = ["The opposite of treat", "Goes bump in the night", "Givens a hoot",
              "Sails the seven seas", "Something orange and around", "Something sweet",
              "Cover your face", "Lights the night"]
     # # (x, y, dimension, length), 0 -> vertical & 1 -> horizontal

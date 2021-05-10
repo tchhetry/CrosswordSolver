@@ -22,5 +22,5 @@ def wordplaysCand(clue, length):
                 answers.append(word[1].text.replace("\n", ""))
     return answers
 
-# domain = wordplaysCand("Cover Your Face", 4) # Something sweet
-# print("domain", domain)
+domain = wordplaysCand("Cover Your Face", 4) # Something sweet
+print("domain", domain)
