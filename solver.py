@@ -258,9 +258,9 @@ if __name__ == '__main__':
     #     # <MODE FLAG> can be either 0 (plain DFS-B) or 1 (improved DFS-B).
     #     print('Usage: python3 dfsb.py <INPUT FILE> <OUTPUT FILE> <MODE FLAG>. \n')
     #     exit(-1)
-    file = args[1]
-    #parser = Parser(file)
-    #crossword = parser.parse()
+    # file = args[1]
+    # parser = Parser()
+    # crossword = parser.parse(file)
     crossword = SampleCrossword()
     hints = [word.clue for word in crossword.word_list]
     word_ass = [None for i in range(len(hints))]
