@@ -22,6 +22,7 @@ class Parser():
         self.add_words_to_crossword()
         self.add_constraints_to_words()
         self.add_constraints_to_crossowrd()
+
         self.add_domains_to_words()
         return self.crossword
 
@@ -116,10 +117,11 @@ class Parser():
     '''
 
     def add_domains_to_words(self):
+        print("Getting Domain")
         for word in self.crossword.word_list:
             domain = getDomain.wordplaysCand(word.clue, word.length)
             word.domain = domain
-
+        print("Complete")
 
 # parser = Parser()
 # parser.parse()

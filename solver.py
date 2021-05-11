@@ -272,10 +272,10 @@ if __name__ == '__main__':
         exit(-1)
     file = args[1]
 
-    print(file[-4:])
     if file[-4:] == ".txt":
         crossword = SampleCrosswordTxt(file)
     else:
+        parser = Parser()
         crossword = parser.parse(file)
     hints = [word.clue for word in crossword.word_list]
     word_ass = [None for i in range(len(hints))]
