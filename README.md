@@ -11,10 +11,10 @@ In case of .txt file, format should be of:
 list of word bank  
 vert_dim,hor_dim  
 Across  
-<number>. (x, y, length) <Hint>
+[number]. (x, y, length) [Hint]
 
 Down  
-<number>. (x, y, length) <Hint>
+[number]. (x, y, length) [Hint]
 
 
 Dependencies: 
