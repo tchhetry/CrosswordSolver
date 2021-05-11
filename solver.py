@@ -324,6 +324,8 @@ if __name__ == '__main__':
             arclist.append((j[1], j[0]))
     print("arclist: ", arclist)
 
+    for i in range(len(cons)):
+        print(f"{i}: {hints[i]}, \t{word_domains[i]}, \t{cons[i]}")
     print(
         f"word_ass: {word_ass} \ncons: {cons} \nword_domains: {word_domains}")
     debug = True  # True, False

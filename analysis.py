@@ -5,11 +5,11 @@ import numpy as np
 
 from samplePuzzle import SampleCrossword, SampleCrosswordTxt
 from Parser import Parser
-from solver 
+import solver 
 
-def run_dfsb(file, debug):
+def run_dfsb(crossword, debug):
     solver.exploredCount = 0
-    crossword = SampleCrosswordTxt(file)
+
     hints = [word.clue for word in crossword.word_list]
     word_ass = [None for i in range(len(hints))]
     word_domains = [word.domain for word in crossword.word_list]
@@ -31,6 +31,22 @@ def run_dfsb(file, debug):
 
     return solution, time_elapsed, solver.exploredCount
 
+def run_files(file_list, prePath, type):
+    solution, state, time = [], [], []
+    for s in file_list:
+        path = prePath + s
+        cw = SampleCrosswordTxt(path) if type=="txt" else Parser().parse(path)
+        sol, time, state = run_dfsb(cw)
+        solution.append(0 if sol==False else 1)
+        state.append(solver.exploredCount)
+        time.append(float(time.total_seconds()))
+    solution, state, time = np.array(solution), np.array(state), np.array(time)
+    stateM, stateSD, timeM, timeSD = np.mean(state), np.std(state), np.mean(time), np.std(time)
+    print("improved DFS-B on {}: # of states explored: {} +- {}, time: {} +- {}. \n".format(path, stateM, 
+            stateSD, timeM, timeSD))
+    print(f"\t solution: {solution}")
+
+
 if __name__ == '__main__':
     print("----- starting compute performance table. ----- \n")
 
@@ -39,9 +55,6 @@ if __name__ == '__main__':
 
     print(simpleP_list, puzzle_list)
 
-    state, time = [], []
-    for s in simpleP_list:
-        path = "simpleP" + s
-        sol, time, state = run_dfsb(path)
-        state.append(solver.exploredCount)
-        time.append(float(time.total_seconds()))
+    run_files(file_list=simpleP_list, prePath="simpleP", type="txt")
+    run_files(file_list=puzzle_list, prePath="puzzles", type="puz")
+
