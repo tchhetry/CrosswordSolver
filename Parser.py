@@ -120,6 +120,7 @@ class Parser():
             row = ['*' if c ==
                    '-' else '_' for c in self.p.fill[start:start + self.p.width]]
             grid.append(row)
+        print(np.array(grid))
         return np.array(grid)
 
     '''
