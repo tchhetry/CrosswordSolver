@@ -309,7 +309,8 @@ if __name__ == '__main__':
     # file = args[1]
     #parser = Parse()
     #crossword = parser.parse(file)
-    crossword = SampleCrosswordTxt('simpleP/p2.txt')
+    crossword = SampleCrossword()
+    #crossword = SampleCrosswordTxt("simpleP/p2.txt")
     hints = [word.clue for word in crossword.word_list]
     word_ass = [None for i in range(len(hints))]
     word_domains = [word.domain for word in crossword.word_list]

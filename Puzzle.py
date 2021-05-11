@@ -18,6 +18,7 @@ class Word:
 
     def __init__(self, number, length, orientation, start, clue, domain=None,  constraints=None):
         self.number = number
+        self.temp = -1
         self.orientation = orientation
         self.length = length
         self.start = start
@@ -57,8 +58,16 @@ class Word:
         # return str(string )
         orientation = " across" if self.orientation == 1 else " down"
 
-        return str(self.number)
+        return str(self.temp) + " " + str(self.number)
         return str(string)
+
+    def __eq__(self, word):
+        return self.number == word.number and self.orientation == word.orientation
+
+    def __gt__(self, word):
+        if self.number == word.number:
+            return self.orientation < word.orientation  # Vertrical first
+        return self.number > word.number
 
 
 class Crossword:

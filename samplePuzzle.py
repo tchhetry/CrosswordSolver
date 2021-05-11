@@ -37,8 +37,8 @@ class SampleCrossword(Crossword):
         words = {}
 
         # Add constraints
-        words_list = [trick, monster, owl,
-                      pirate, pumpkin, candy, lantern, mask]
+        words_list = [pirate, trick, monster, owl,
+                      pumpkin, candy, lantern, mask]
 
         for word in words_list:
             words = self.add_to_words(word, words)
@@ -113,6 +113,7 @@ class SampleCrosswordTxt(Crossword):
 
             # Process across
             words_list = []
+
             for val in across:
                 num = int(val.split('.')[0])
                 s = val.split(' ')
@@ -137,15 +138,13 @@ class SampleCrosswordTxt(Crossword):
                     x, y], clue, dictionary[length]))
 
             words = {}
+
             for word in words_list:
                 words = self.add_to_words(word, words)
-
             for key, value in words.items():
                 for i in range(len(value)-1):
                     for j in range(i+1, len(value)):
-                        # value[j][0] is word2
-                        # value[j][1] is index of word2
-                        # value[i][1] is index of word`
+
                         value[i][0].constraints.append(
                             [value[j][0], value[j][1], value[i][1]])
                         value[j][0].constraints.append(
@@ -153,15 +152,44 @@ class SampleCrosswordTxt(Crossword):
 
             # Add to crossword constraints
             constraints = []
-
             for i in range(len(words_list)):
-                word = words_list[i]
-                cons = word.constraints
                 row = []
-                for c in cons:
-                    row.append([[word.number, c[2]], [c[0].number, c[1]]])
+                word = words_list[i]
+                for nei in word.constraints:
+                    pos = words_list.index(nei[0])
+                    ind = nei[1]
+                    row.append([[pos, ind], [i, nei[2]]])
                 constraints.append(row)
-            # for word in words_list:
+            # words_list = sorted(words_list)
+
+            # words = {}
+            # for i in range(len(words_list)):
+            #     word = words_list[i]
+            #     word.temp = i
+            #     words = self.add_to_words(word, words)
+
+            # for key, value in words.items():
+            #     for i in range(len(value)-1):
+            #         for j in range(i+1, len(value)):
+            #             # value[j][0] is word2
+            #             # value[j][1] is index of word2
+            #             # value[i][1] is index of word`
+            #             value[i][0].constraints.append(
+            #                 [value[j][0], value[j][1], value[i][1]])
+            #             value[j][0].constraints.append(
+            #                 [value[i][0], value[i][1], value[j][1]])
+
+            # # Add to crossword constraints
+            # constraints = []
+
+            # for i in range(len(words_list)):
+            #     word = words_list[i]
+            #     cons = word.constraints
+            #     row = []
+            #     for c in cons:
+            #         row.append([[c[0].temp, c[1]], [word.temp, c[2]]])
+
+            #     constraints.append(row)
 
         super().__init__(9, 10, [], words_list, constraints)
 
@@ -184,9 +212,10 @@ class SampleCrosswordTxt(Crossword):
 
 # file = 'simpleP/p2.txt'
 # sample = SampleCrosswordTxt(file)
-# for word in sample.word_list:
-#     print(word.number)
-#     print(word.constraints)
+# print(sample.word_list)
+# # for word in sample.word_list:
+# #     print(word.number)
+# #     print(word.constraints)
 
 # for c in sample.constraints:
 #     print(c)
