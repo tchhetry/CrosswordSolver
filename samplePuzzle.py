@@ -1,5 +1,6 @@
 from Puzzle import Crossword, Word
 import numpy as np
+import copy
 '''
 Sample Crossword Puzzle Object
 '''
@@ -37,8 +38,8 @@ class SampleCrossword(Crossword):
         words = {}
 
         # Add constraints
-        words_list = [pirate, trick, monster, owl,
-                      pumpkin, candy, lantern, mask]
+        words_list = [trick, monster, owl,
+                      pirate, pumpkin, candy, mask, lantern]
 
         for word in words_list:
             words = self.add_to_words(word, words)
@@ -86,8 +87,11 @@ class SampleCrosswordTxt(Crossword):
     def __init__(self, file):
         with open(file, 'r') as f:
             lines = f.readlines()
-            words = lines[0].strip().split(", ")
 
+            words = lines[0].strip().split(", ")
+            dim = lines[1].split(',')
+            vert = int(dim[0])
+            hor = int(dim[0])
             dictionary = {}
 
             for word in words:
@@ -124,7 +128,7 @@ class SampleCrosswordTxt(Crossword):
                 clue = ' '.join(s[4:])[:-1]
 
                 words_list.append(Word(num, length, orientation, [
-                    x, y], clue, dictionary[length]))
+                                  x, y], clue, copy.deepcopy(dictionary[length])))
 
             for val in down:
                 num = int(val.split('.')[0])
@@ -135,12 +139,13 @@ class SampleCrosswordTxt(Crossword):
                 orientation = 0
                 clue = ' '.join(s[4:])[:-1]
                 words_list.append(Word(num, length, orientation, [
-                    x, y], clue, dictionary[length]))
+                    x, y], clue, copy.deepcopy(dictionary[length])))
 
+            words_list = sorted(words_list)
             words = {}
-
             for word in words_list:
                 words = self.add_to_words(word, words)
+
             for key, value in words.items():
                 for i in range(len(value)-1):
                     for j in range(i+1, len(value)):
@@ -160,38 +165,9 @@ class SampleCrosswordTxt(Crossword):
                     ind = nei[1]
                     row.append([[pos, ind], [i, nei[2]]])
                 constraints.append(row)
-            # words_list = sorted(words_list)
 
-            # words = {}
-            # for i in range(len(words_list)):
-            #     word = words_list[i]
-            #     word.temp = i
-            #     words = self.add_to_words(word, words)
-
-            # for key, value in words.items():
-            #     for i in range(len(value)-1):
-            #         for j in range(i+1, len(value)):
-            #             # value[j][0] is word2
-            #             # value[j][1] is index of word2
-            #             # value[i][1] is index of word`
-            #             value[i][0].constraints.append(
-            #                 [value[j][0], value[j][1], value[i][1]])
-            #             value[j][0].constraints.append(
-            #                 [value[i][0], value[i][1], value[j][1]])
-
-            # # Add to crossword constraints
-            # constraints = []
-
-            # for i in range(len(words_list)):
-            #     word = words_list[i]
-            #     cons = word.constraints
-            #     row = []
-            #     for c in cons:
-            #         row.append([[c[0].temp, c[1]], [word.temp, c[2]]])
-
-            #     constraints.append(row)
-
-        super().__init__(9, 10, [], words_list, constraints)
+        super().__init__(vert, hor, self.create_grid(
+            hor, vert, words), words_list, constraints)
 
     def add_to_words(self, word, words):
         i = word.start[0]
@@ -209,7 +185,18 @@ class SampleCrosswordTxt(Crossword):
             ind += 1
         return words
 
+    def create_grid(self, width, height, word_list):
+        grid = [["_" for j in range(width)] for i in range(height)]
 
+        for key in word_list.keys():
+            grid[key[0]][key[1]] = "*"
+        print(np.array(grid))
+        # for i in range(height):
+        #     start = i * width
+        #     row = ['*' if c ==
+        #            '-' else '_' for c in self.p.fill[start:start + width]]
+        #     grid.append(row)
+        return np.array(grid)
 # file = 'simpleP/p2.txt'
 # sample = SampleCrosswordTxt(file)
 # print(sample.word_list)

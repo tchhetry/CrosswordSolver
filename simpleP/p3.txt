@@ -1,11 +1,11 @@
 earth, jupiter, mercury, moons, rings, star, surface, system, telescope, venus
-
+12,12
 Across
 1. (0, 1, 9) All nine planets can be seen through a __
 6. (3, 2, 5) The planet that we call home
 8. (5, 5, 5) Jupiter has 63 differernt __
 9. (7, 0, 7) The __ of Mars is red and rocky
-10. (7, 7, 4) The sun is the biggest __ in our Solar System
+10. (7, 8, 4) The sun is the biggest __ in our Solar System
 
 Down
 2. (0, 5, 6) Our Solar __ has nine known planets

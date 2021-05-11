@@ -1,9 +1,9 @@
 trick, pumpkin, monster, owl, pirate, mask, lantern, candy, lent, wow
-
+10,10
 Across
-3. (3, 6, 3) Givens a hoot
-4. (4, 0, 7) Something orange and around
-7. (7, 2, 1, 7) Lights the night
+3. (3, 6, 3) Gives a hoot
+4. (4, 0, 7) Something orange and round
+7. (7, 2, 7) Lights the night
 
 Down
 1. (0, 4, 5) The opposite of treat

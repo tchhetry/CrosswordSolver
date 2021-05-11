@@ -1,5 +1,5 @@
 clouds, drizzle, hurricane, lightning, rain, rainbow, snowflakes, temperature, thunder, wind 
-
+15,15
 Across
 2. (1, 4, 4) Water that falls from the sky
 4. (3, 2, 6) These are made from water vapour

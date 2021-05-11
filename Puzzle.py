@@ -58,7 +58,7 @@ class Word:
         # return str(string )
         orientation = " across" if self.orientation == 1 else " down"
 
-        return str(self.temp) + " " + str(self.number)
+        return str(self.number) + " " + orientation
         return str(string)
 
     def __eq__(self, word):
@@ -66,7 +66,7 @@ class Word:
 
     def __gt__(self, word):
         if self.number == word.number:
-            return self.orientation < word.orientation  # Vertrical first
+            return self.orientation > word.orientation  # Vertrical first
         return self.number > word.number
 
 

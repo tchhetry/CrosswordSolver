@@ -306,18 +306,26 @@ if __name__ == '__main__':
     #     print('Error: invalid arguments!')
     #     print('Usage: python3 solver.py <INPUT FILE> <OUTPUT FILE> <MODE FLAG>. \n')
     #     exit(-1)
-    # file = args[1]
+    file = args[1]
     #parser = Parse()
     #crossword = parser.parse(file)
-    crossword = SampleCrossword()
-    #crossword = SampleCrosswordTxt("simpleP/p2.txt")
+    #crossword = SampleCrossword()
+    print(file[-4:])
+    if file[-4:] == ".txt":
+        crossword = SampleCrosswordTxt(file)
+    else:
+        crossword = parser.parse(file)
     hints = [word.clue for word in crossword.word_list]
     word_ass = [None for i in range(len(hints))]
     word_domains = [word.domain for word in crossword.word_list]
-    print(word_domains)
+
     cons = crossword.constraints
 
     arclist = []
+
+    for i in range(len(crossword.word_list)):
+        print(i, ":", crossword.word_list[i])
+
     for i in range(len(cons)):
         print(f"cons at {i}: {cons[i]}")
         for j in cons[i]:
@@ -341,7 +349,7 @@ if __name__ == '__main__':
     print(crossword.return_grid())
 
     # Output solution into text file
-    # output_file = args[2]
-    # if solution is not False:
-    #     with open(output_file, 'w') as f:
-    #         f.write(str(crossword.return_grid()))
+    output_file = args[2]
+    if solution is not False:
+        with open(output_file, 'w') as f:
+            f.write(str(crossword.return_grid()))

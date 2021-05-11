@@ -1,10 +1,10 @@
 hinge, thumb, calcium, ball, skeleton, cylinder, gliding, cartilage, immovable, backbone, tendens, movable, femur, marrow
-
+13,13
 Across
-1. makes bones strong
-3. long upper leg bones
-4. opposable joint as strong as our 4 fingers
-8. joint that allows bones to glide over each other
+1. (0, 6, 7) makes bones strong
+3. (2, 5, 5) long upper leg bones
+4. (2, 11, 5) opposable joint as strong as our 4 fingers
+8. () joint that allows bones to glide over each other
 9. joint that moves any direction 
 10. joints in skull
 12. connects bones to muscles
