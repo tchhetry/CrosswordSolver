@@ -8,16 +8,16 @@ Note: Input file can be of .txt or .puz
 
 In case of .txt file, format should be of: 
 
-list of word bank\  
-vert_dim,hor_dim\  
-Across\  
+list of word bank  
+vert_dim,hor_dim  
+Across  
 <number>. (x, y, length) <Hint>
 
-Down\  
+Down  
 <number>. (x, y, length) <Hint>
 
 
 Dependencies: 
-> pip install english_words \ 
-> pip install beautiful_soup \ 
-> pip install selium \
+> pip install english_words  
+> pip install beautiful_soup  
+> pip install selium  
