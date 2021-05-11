@@ -159,7 +159,7 @@ class SampleCrosswordTxt(Crossword):
                 cons = word.constraints
                 row = []
                 for c in cons:
-                    row.append([[word.number-1, c[2]], [c[0].number-1, c[1]]])
+                    row.append([[word.number, c[2]], [c[0].number, c[1]]])
                 constraints.append(row)
             # for word in words_list:
 
