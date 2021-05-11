@@ -116,22 +116,23 @@ class SampleCrosswordTxt(Crossword):
             for val in across:
                 num = int(val.split('.')[0])
                 s = val.split(' ')
-                x = int(s[1][1])
-                y = int(s[2][0])
+                x = int(s[1][1:-1])
+                y = int(s[2][:-1])
                 length = int(s[3][:-1])
                 orientation = 1
-                clue = ' '.join(s[4:-1])
+                clue = ' '.join(s[4:])[:-1]
+
                 words_list.append(Word(num, length, orientation, [
                     x, y], clue, dictionary[length]))
 
             for val in down:
                 num = int(val.split('.')[0])
                 s = val.split(' ')
-                x = int(s[1][1])
-                y = int(s[2][0])
+                x = int(s[1][1:-1])
+                y = int(s[2][:-1])
                 length = int(s[3][:-1])
                 orientation = 0
-                clue = ' '.join(s[4:-1])
+                clue = ' '.join(s[4:])[:-1]
                 words_list.append(Word(num, length, orientation, [
                     x, y], clue, dictionary[length]))
 
@@ -142,7 +143,9 @@ class SampleCrosswordTxt(Crossword):
             for key, value in words.items():
                 for i in range(len(value)-1):
                     for j in range(i+1, len(value)):
-
+                        # value[j][0] is word2
+                        # value[j][1] is index of word2
+                        # value[i][1] is index of word`
                         value[i][0].constraints.append(
                             [value[j][0], value[j][1], value[i][1]])
                         value[j][0].constraints.append(
@@ -150,14 +153,15 @@ class SampleCrosswordTxt(Crossword):
 
             # Add to crossword constraints
             constraints = []
+
             for i in range(len(words_list)):
-                row = []
                 word = words_list[i]
-                for nei in word.constraints:
-                    pos = words_list.index(nei[0])
-                    ind = nei[1]
-                    row.append([[pos, ind], [i, nei[2]]])
+                cons = word.constraints
+                row = []
+                for c in cons:
+                    row.append([[word.number-1, c[2]], [c[0].number-1, c[1]]])
                 constraints.append(row)
+            # for word in words_list:
 
         super().__init__(9, 10, [], words_list, constraints)
 
@@ -170,7 +174,7 @@ class SampleCrosswordTxt(Crossword):
                 words[(i, j)].append([word, ind])
             except:
                 words[(i, j)] = [[word, ind]]
-            if word.orientation == 0:
+            if word.orientation == 0:  # Vertical then increment i
                 i += 1
             else:
                 j += 1
@@ -183,3 +187,6 @@ sample = SampleCrosswordTxt(file)
 # for word in sample.word_list:
 #     print(word.number)
 #     print(word.constraints)
+
+# for c in sample.constraints:
+#     print(c)
