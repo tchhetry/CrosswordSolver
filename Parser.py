@@ -7,6 +7,16 @@ import puz
 from Puzzle import Crossword, Word
 import getDomain
 import numpy as np
+import copy
+from english_words import english_words_lower_set
+
+english_dic = {}
+
+for word in english_words_lower_set:
+    try:
+        english_dic[len(word)].append(word)
+    except:
+        english_dic[len(word)] = [word]
 
 
 class Parser():
@@ -113,22 +123,16 @@ class Parser():
         return np.array(grid)
 
     '''
-    BERT to get domain 
+    Webscraper to get domain 
     '''
 
     def add_domains_to_words(self):
         print("Getting Domain")
+        use_dict = 1
         for word in self.crossword.word_list:
             domain = getDomain.wordplaysCand(word.clue, word.length)
+
+            if len(domain) == 0 and use_dict == 1:
+                domain = copy.deepcopy(english_dic[word.length])
             word.domain = domain
         print("Complete")
-
-# parser = Parser()
-# parser.parse()
-
-# solution = parser.p.solution
-# width = parser.p.width
-# ind = 0
-# while ind < len(solution):
-#     print(solution[ind:ind+width])
-#     ind += width

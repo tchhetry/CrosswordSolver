@@ -3,7 +3,7 @@ children, clean, father, listen, hot, people, read, say, start, tell
 Across
 1. (2, 0, 5) To begin an activity
 2. (5, 1, 8) A group of young people
-5. (0, 8, 5) To remove direction
+5. (0, 7, 5) To remove direction
 7. (3, 6, 6) A mole parent
 9. (7, 5, 3) To speak words
 

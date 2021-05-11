@@ -75,7 +75,9 @@ def AC3(cons, doms, arcl, debug):
         removed = False
         if debug:
             print("t: {} -> h: {}, old t d: {}".format(t, h, doms[t[0]]))
+
         overlap = [w[h[1]] for w in doms[h[0]]]
+
         if debug:
             print(f"\th d: {doms[h[0]]}, {overlap}")
         # for each value in tail's domain

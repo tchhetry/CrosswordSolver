@@ -6,6 +6,7 @@ import requests
 # link = "https://crossword-solver.io/clue/Cover-your-face/pattern/____/?s=1"
 link = "https://crossword-solver.io"
 
+
 def wordplaysCand(clue, length):
     answers = []
     linkClue = clue.replace(" ", "-")
@@ -19,8 +20,9 @@ def wordplaysCand(clue, length):
         for r in rows:
             word = r.find_all("td")
             if len(word) > 1:
-                answers.append(word[1].text.replace("\n", ""))
+                answers.append(word[1].text.replace("\n", "").lower())
     return answers
 
-domain = wordplaysCand("Cover Your Face", 4) # Something sweet
+
+domain = wordplaysCand("Cover Your Face", 4)  # Something sweet
 print("domain", domain)

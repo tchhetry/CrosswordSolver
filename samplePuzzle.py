@@ -5,6 +5,16 @@ import copy
 Sample Crossword Puzzle Object
 '''
 
+from english_words import english_words_lower_set
+
+english_dic = {}
+
+for word in english_words_lower_set:
+    try:
+        english_dic[len(word)].append(word)
+    except:
+        english_dic[len(word)] = [word]
+
 
 class SampleCrossword(Crossword):
     def __init__(self):
@@ -88,6 +98,7 @@ class SampleCrosswordTxt(Crossword):
         with open(file, 'r') as f:
             lines = f.readlines()
 
+            use_eng_dom = 0
             words = lines[0].strip().split(", ")
             dim = lines[1].split(',')
             vert = int(dim[0])
@@ -127,9 +138,12 @@ class SampleCrosswordTxt(Crossword):
                 orientation = 1
                 clue = ' '.join(s[4:])[:-1]
 
-                words_list.append(Word(num, length, orientation, [
-                                  x, y], clue, copy.deepcopy(dictionary[length])))
-
+                if use_eng_dom == 0:
+                    words_list.append(Word(num, length, orientation, [
+                        x, y], clue, copy.deepcopy(dictionary[length])))
+                else:
+                    words_list.append(Word(num, length, orientation, [
+                        x, y], clue, copy.deepcopy(english_dic[length])))
             for val in down:
                 num = int(val.split('.')[0])
                 s = val.split(' ')
@@ -138,8 +152,13 @@ class SampleCrosswordTxt(Crossword):
                 length = int(s[3][:-1])
                 orientation = 0
                 clue = ' '.join(s[4:])[:-1]
-                words_list.append(Word(num, length, orientation, [
-                    x, y], clue, copy.deepcopy(dictionary[length])))
+
+                if use_eng_dom == 0:
+                    words_list.append(Word(num, length, orientation, [
+                        x, y], clue, copy.deepcopy(dictionary[length])))
+                else:
+                    words_list.append(Word(num, length, orientation, [
+                        x, y], clue, copy.deepcopy(english_dic[length])))
 
             words_list = sorted(words_list)
             words = {}
