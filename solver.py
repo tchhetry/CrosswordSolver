@@ -313,6 +313,7 @@ if __name__ == '__main__':
     hints = [word.clue for word in crossword.word_list]
     word_ass = [None for i in range(len(hints))]
     word_domains = [word.domain for word in crossword.word_list]
+    print(word_domains)
     cons = crossword.constraints
 
     arclist = []

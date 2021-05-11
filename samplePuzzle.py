@@ -182,8 +182,8 @@ class SampleCrosswordTxt(Crossword):
         return words
 
 
-file = 'simpleP/p2.txt'
-sample = SampleCrosswordTxt(file)
+# file = 'simpleP/p2.txt'
+# sample = SampleCrosswordTxt(file)
 # for word in sample.word_list:
 #     print(word.number)
 #     print(word.constraints)
