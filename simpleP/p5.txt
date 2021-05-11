@@ -1,5 +1,5 @@
 flowers, food, fruit, ground, grow, leaves, living, minerals, oxygen, pollen, roots, seed, seeds, stem, water
-13,13
+14,14
 Across
 1. (0, 0, 5) New plants grow from tiny __
 4. (0, 8, 4) Like all living things, plants ___ and change

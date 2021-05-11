@@ -262,54 +262,16 @@ def printBoard(board):
 
 if __name__ == '__main__':
     print(sys.argv, len(sys.argv), sys.argv[0])
-
-    n = 10
-    words = ["trick", "pumpkin", "monster", "owl",
-             "pirate", "mask", "lantern", "candy", "lent", "wow"]
-    hints = ["The opposite of treat", "Goes bump in the night", "Givens a hoot",
-             "Sails the seven seas", "Something orange and around", "Something sweet",
-             "Cover your face", "Lights the night"]
-    # # (x, y, dimension, length), 0 -> vertical & 1 -> horizontal
-    # # positions = [(0, 4, 0, 5), (2, 6, 0, 7), (3, 6, 1, 3), (4, 0, 0, 6), (4, 0, 1, 7),
-    # #     (5, 8, 0, 5), (6, 3, 0, 4), (7, 2, 1, 7)]
-    # positions = [(0, 4, 0, 5), (2, 6, 0, 7), (3, 6, 1, 3), (4, 0, 0, 6), (4, 0, 1, 7),
-    #              (5, 8, 0, 5), (7, 2, 1, 7), (6, 3, 0, 4)]
-    # word_ass = [None for i in range(len(hints))]
-    # word_domains = [[w for w in words if len(
-    #     w) == positions[i][3]] for i in range(len(hints))]
-    # print("word domains: ", word_domains)
-    # b, cons = buildBoard(n, positions)
-    # printBoard(b)
-    # random.shuffle(words)
-    # print("words: ", words, len(hints))
-    # for c in cons:
-    #     print(c)
-    # for d in word_domains:
-    #     print(d)
-
-    # ADDED TO TEST STRUCTURE
-    # sample = SampleCrossword()
-    # hints = [word.clue for word in sample.word_list]
-
-    # word_ass = [None for i in range(len(hints))]
-    # word_domains = [word.domain for word in sample.word_list]
-
-    # cons = sample.constraints
-
-    # for i in range(len(cons)):
-    #     print(f"{i}: {hints[i]}, \t{word_domains[i]}, \t{cons[i]}")
-
+    debug = 0
     # Get Crossword CSP
     args = sys.argv
 
-    # if len(args) != 3:
-    #     print('Error: invalid arguments!')
-    #     print('Usage: python3 solver.py <INPUT FILE> <OUTPUT FILE> <MODE FLAG>. \n')
-    #     exit(-1)
+    if len(args) != 3:
+        print('Error: invalid arguments!')
+        print('Usage: python3 solver.py <INPUT FILE> <OUTPUT FILE> <MODE FLAG>. \n')
+        exit(-1)
     file = args[1]
-    #parser = Parse()
-    #crossword = parser.parse(file)
-    #crossword = SampleCrossword()
+
     print(file[-4:])
     if file[-4:] == ".txt":
         crossword = SampleCrosswordTxt(file)

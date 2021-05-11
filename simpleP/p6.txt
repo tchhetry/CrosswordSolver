@@ -1,5 +1,5 @@
 children, clean, father, listen, hot, people, read, say, start, tell
-
+13,13
 Across
 1. (2, 0, 5) To begin an activity
 2. (5, 1, 8) A group of young people

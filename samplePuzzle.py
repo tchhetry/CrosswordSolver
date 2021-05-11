@@ -190,12 +190,7 @@ class SampleCrosswordTxt(Crossword):
 
         for key in word_list.keys():
             grid[key[0]][key[1]] = "*"
-        print(np.array(grid))
-        # for i in range(height):
-        #     start = i * width
-        #     row = ['*' if c ==
-        #            '-' else '_' for c in self.p.fill[start:start + width]]
-        #     grid.append(row)
+
         return np.array(grid)
 # file = 'simpleP/p2.txt'
 # sample = SampleCrosswordTxt(file)
