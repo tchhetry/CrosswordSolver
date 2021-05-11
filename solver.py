@@ -3,7 +3,7 @@ This files takes in a .puz file and MODE flag
 FORMAT python solver.py <input_file> <output_file> <mode> 
 '''
 
-from samplePuzzle import SampleCrossword
+from samplePuzzle import SampleCrossword, SampleCrosswordTxt
 import sys
 from datetime import datetime
 from queue import PriorityQueue
@@ -294,10 +294,10 @@ if __name__ == '__main__':
     # word_ass = [None for i in range(len(hints))]
     # word_domains = [word.domain for word in sample.word_list]
 
-    cons = sample.constraints
+    # cons = sample.constraints
 
-    for i in range(len(cons)):
-        print(f"{i}: {hints[i]}, \t{word_domains[i]}, \t{cons[i]}")
+    # for i in range(len(cons)):
+    #     print(f"{i}: {hints[i]}, \t{word_domains[i]}, \t{cons[i]}")
 
     # Get Crossword CSP
     args = sys.argv
@@ -307,8 +307,9 @@ if __name__ == '__main__':
         print('Usage: python3 solver.py <INPUT FILE> <OUTPUT FILE> <MODE FLAG>. \n')
         exit(-1)
     file = args[1]
-    parser = Parse()
-    crossword = parser.parse(file)
+    #parser = Parse()
+    #crossword = parser.parse(file)
+    crossword = SampleCrosswordTxt('simpleP/p2.txt')
     hints = [word.clue for word in crossword.word_list]
     word_ass = [None for i in range(len(hints))]
     word_domains = [word.domain for word in crossword.word_list]

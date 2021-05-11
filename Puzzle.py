@@ -57,6 +57,7 @@ class Word:
         # return str(string )
         orientation = " across" if self.orientation == 1 else " down"
 
+        return str(self.number)
         return str(string)
 
 
